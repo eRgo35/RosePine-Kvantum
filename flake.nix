@@ -6,8 +6,14 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
       in
@@ -20,10 +26,10 @@
 
           installPhase = ''
             runHook preInstall
-            
+
             mkdir -p $out/share/Kvantum/rosepine-kvantum
-            cp -r RosePine/* $out/share/Kvantum/rosepine-kvantum/
-            
+            cp -r rosepine-kvantum $out/share/Kvantum/rosepine-kvantum
+
             runHook postInstall
           '';
 
@@ -37,4 +43,3 @@
       }
     );
 }
-
