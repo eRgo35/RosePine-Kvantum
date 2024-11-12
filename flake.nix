@@ -1,11 +1,9 @@
 {
   description = "Rose Pine theme for Kvantum";
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
-
   outputs =
     {
       self,
@@ -18,18 +16,15 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        packages.default = pkgs.stdenv.mkDerivation {
+        packages.default = pkgs.stdenvNoCC.mkDerivation {
           pname = "rosepine-kvantum";
           version = "1.0.0";
-
           src = ./.;
 
           installPhase = ''
             runHook preInstall
-
-            mkdir -p $out/share/Kvantum/rosepine-kvantum
-            cp -r rosepine-kvantum $out/share/Kvantum/rosepine-kvantum
-
+            mkdir -p $out/share/Kvantum
+            cp -r rosepine-kvantum $out/share/Kvantum/
             runHook postInstall
           '';
 
@@ -37,7 +32,7 @@
             description = "Rose Pine theme for Kvantum";
             homepage = "https://github.com/eRgo35/RosePine-Kvantum";
             license = licenses.mit;
-            platforms = platforms.all;
+            platforms = platforms.linux;
           };
         };
       }
